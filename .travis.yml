@@ -1,0 +1,15 @@
+language: generic
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker login --username=_ --password=${HEROKU_API_KEY} registry.heroku.com
+
+script:
+    - docker build -t registry.heroku.com/${HEROKU_APP_NAME}/web -f ./Photogallery/Dockerfile ./Photogallery
+    - docker push registry.heroku.com/${HEROKU_APP_NAME}/web
+
+deploy:
+    provider: script
+    script: bash ./deploy.sh
