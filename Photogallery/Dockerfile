@@ -14,4 +14,5 @@ RUN dotnet publish "Photogallery.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-CMD ["dotnet", "Photogallery.dll"]
+#CMD ["dotnet", "Photogallery.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet Photogallery.dll
