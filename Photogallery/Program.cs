@@ -22,8 +22,9 @@ namespace Photogallery
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseKestrel().UseStartup<Startup>();
-                    webBuilder.UseUrls($"http://*{Environment.GetEnvironmentVariable("PORT")}");
+                    webBuilder.UseKestrel()
+                                .UseUrls("http://0.0.0.0:" + Environment.GetEnvironmentVariable("PORT"))
+                                .UseStartup<Startup>();
                 });
     }
 }
