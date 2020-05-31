@@ -1,37 +1,71 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Photogallery</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
+﻿@inject IJSRuntime JSRuntime
+@inject NavigationManager _navigationManager
+<header class="nav-menu-container">
+    <button class="nav-menu-hamburger @HamburgerMenuActiveCssModifier" @onclick="ToggleNavMenu">
+        <span class="nav-menu-hamburger__item nav-menu-hamburger__item--first"></span>
+        <span class="nav-menu-hamburger__item"></span>
+        <span class="nav-menu-hamburger__item nav-menu-hamburger__item--last"></span>
     </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
+    <ul class="nav-menu">
+        <li class="nav-menu__item">
+            <NavLink href="/#albums" ActiveClass="" class="nav-menu__text">~ Albums ~</NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
+        <li class="nav-menu__item">
+            <NavLink href="/#about" ActiveClass="" class="nav-menu__text">~ About me ~</NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
+        <li class="nav-menu__item">
+            <NavLink href="/#contact" ActiveClass="" class="nav-menu__text">~ Contact ~</NavLink>
         </li>
     </ul>
-</div>
+</header>
 
 @code {
-    private bool collapseNavMenu = true;
+    private bool activateHamburgerMenu = false;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string HamburgerMenuActiveCssModifier => activateHamburgerMenu ? "nav-menu-hamburger--active" : null;
 
     private void ToggleNavMenu()
     {
-        collapseNavMenu = !collapseNavMenu;
+        activateHamburgerMenu = !activateHamburgerMenu;
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        _navigationManager.LocationChanged += async (sender, args) => await NavigateToElement();
+        return Task.CompletedTask;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await NavigateToElement();
+        }
+    }
+
+    private async Task NavigateToElement()
+    {
+        var uri = _navigationManager.ToAbsoluteUri(_navigationManager.Uri);
+
+        if (uri.Fragment.Length == 0)
+            return;
+
+        var fragment = uri.Fragment.Substring(1);
+
+        if (string.IsNullOrEmpty(fragment))
+        {
+            return;
+        }
+
+        var elementId = fragment.StartsWith("#") ? fragment.Substring(1) : fragment;
+
+        if (string.IsNullOrEmpty(elementId))
+        {
+            return;
+        }
+
+        await JSRuntime.InvokeVoidAsync("ScrollToSection", elementId);
+        activateHamburgerMenu = false;
+        this.StateHasChanged();
     }
 }

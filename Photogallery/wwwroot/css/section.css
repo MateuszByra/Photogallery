@@ -1,0 +1,41 @@
+﻿.section {
+    display: block;
+    padding: 50px 0;
+    background-color: #e8e8e8;
+}
+
+.section-header {
+    font-family: 'Architects Daughter', cursive;
+    display: block;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #111;
+    font-weight: normal;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+.section-text {
+    margin: 0 auto;
+    width: 330px;
+    text-align: center;
+    font-family: 'Archivo Narrow', sans-serif;
+}
+
+.section-text--about-me {
+    color: #fff;
+}
+
+.section-bg {
+    min-height: 100%;
+    position: relative;
+    /*opacity: 0.65;*/
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.section-bg--forest {
+    background-image: url('/images/forest.jpg');
+}

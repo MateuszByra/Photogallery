@@ -1,0 +1,131 @@
+﻿.nav-menu-container {
+    display: block;
+    background-image: url('/images/note.jpg');
+    position: relative;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-color: #2F2F2F;
+    min-height: 600px;
+    text-align: right;
+}
+
+.nav-menu {
+    display: inline-block;
+    list-style: none;
+    padding: 0 40px;
+    margin: 0;
+}
+
+.nav-menu__item {
+    display: inline-block;
+    padding: 15px;
+    opacity: 0.8;
+}
+
+.nav-menu__item:after {
+    content: '';
+    background: #fff;
+    height: 1px;
+    width: 0;
+    display: block;
+    margin-top: 2px !important;
+    transition: width 1s;
+    margin: 0 auto;
+}
+
+.nav-menu__item:hover {
+    opacity: 1;
+}
+
+.nav-menu__item:hover:after {
+    width: 100%;
+}
+
+.nav-menu__text {
+    color: #fff;
+    text-transform: lowercase;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.nav-menu-hamburger {
+    display: none;
+    background-color: unset;
+    border: none;
+}
+
+.nav-menu-hamburger:focus {
+    outline: none;
+}
+
+.nav-menu-hamburger__item {
+    width: 35px;
+    height: 5px;
+    background-color: #fff;
+    margin: 6px 0;
+    display: block;
+    transition: 0.4s;
+}
+
+.nav-menu-hamburger--active .nav-menu-hamburger__item {
+    opacity: 0;
+}
+
+.nav-menu-hamburger--active .nav-menu-hamburger__item--first {
+    opacity: 1;
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.nav-menu-hamburger--active .nav-menu-hamburger__item--last {
+    opacity: 1;
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+} 
+
+@media all and (max-width: 750px) {
+    .nav-menu-container {
+        background-size: 100%;
+        min-height: 300px;
+    }
+}
+
+@media all and (max-width: 600px){
+    .nav-menu-container {
+        text-align: center;
+    }
+
+    .nav-menu-hamburger {
+        display: block;
+        top: 0;
+        position: absolute;
+        right: 10px;
+    }
+
+    .nav-menu {
+        background-color: #2F2F2F;
+        width: 100%;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s;
+    }
+
+    .nav-menu__item {
+        display: none;
+        margin: 0 50px;
+    }
+
+    .nav-menu__item:hover:after {
+        width: 50%;
+    }
+
+    .nav-menu-hamburger--active + .nav-menu {
+        max-height: 164px;
+    }
+
+    .nav-menu-hamburger--active + .nav-menu .nav-menu__item {
+        display: block;
+    }
+}
